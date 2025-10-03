@@ -1,2 +1,3 @@
-# CS50w-commerce
-Design an eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist.”
+# CS50w Project 2: Commerce
+
+This is my implementation of Project 2 (**Commerce**) from Harvard's CS50 Web Programming with Python and JavaScript.
