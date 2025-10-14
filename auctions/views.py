@@ -63,5 +63,14 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def create_listing(request):
-    # add if user is non error
+    # add if user is non error, if not logged in redirect to login page with message
+    if request.method == "POST":
+        title = request.POST.get("title", "").strip()
+        description = request.POST.get("description", "").strip()
+        starting_bid = request.POST.get("starting_bid", "").strip()
+        image_url = request.POST.get("image_url", "").strip()
+
+
+
+
     return render(request, "auctions/create_listing.html")
