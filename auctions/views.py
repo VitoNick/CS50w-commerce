@@ -4,11 +4,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import User, AuctionListing, Bid, Comments
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    listings = AuctionListing
+    return render(request, "auctions/index.html", {"listings": listings})
 
 
 def login_view(request):
@@ -63,14 +64,28 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def create_listing(request):
-    # add if user is non error, if not logged in redirect to login page with message
+    # check if user is logged in
+    if not request.user.is_authenticated:
+        # error message if not logged in
+        # render with "message": "User Must Login First"
+        return render(request, "auctions/create_listing.html", {"message": "User Must Be Logged in First"})
+
     if request.method == "POST":
         title = request.POST.get("title", "").strip()
         description = request.POST.get("description", "").strip()
         starting_bid = request.POST.get("starting_bid", "").strip()
         image_url = request.POST.get("image_url", "").strip()
 
+        # what are we going to do with all of this information?
+        listing = AuctionListing.objects.create(
+            title=title, 
+            description=description, 
+            starting_bid=starting_bid, 
+            image_url=image_url,
+            owner=request.user
+        )
+        print(listing)
 
-
+        return HttpResponseRedirect(reverse("index"))
 
     return render(request, "auctions/create_listing.html")
