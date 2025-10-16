@@ -7,3 +7,26 @@ body {
     font-size: 24px;
     font-weight: bold;
 }
+
+.image {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.listing {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.listing h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.listing p {
+    margin-bottom: 5px;
+    color: #666;
+}

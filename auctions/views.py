@@ -8,7 +8,8 @@ from .models import User, AuctionListing, Bid, Comments
 
 
 def index(request):
-    listings = AuctionListing
+    # Retrieve all auction listings, ordered by creation date/time
+    listings = AuctionListing.objects.filter(active=True).order_by('-created_at')
     return render(request, "auctions/index.html", {"listings": listings})
 
 
@@ -64,10 +65,8 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def create_listing(request):
-    # check if user is logged in
+    # Check if the user is logged in
     if not request.user.is_authenticated:
-        # error message if not logged in
-        # render with "message": "User Must Login First"
         return render(request, "auctions/create_listing.html", {"message": "User Must Be Logged in First"})
 
     if request.method == "POST":
@@ -76,7 +75,7 @@ def create_listing(request):
         starting_bid = request.POST.get("starting_bid", "").strip()
         image_url = request.POST.get("image_url", "").strip()
 
-        # what are we going to do with all of this information?
+        # Create a new Auction Listing
         listing = AuctionListing.objects.create(
             title=title, 
             description=description, 
@@ -84,7 +83,6 @@ def create_listing(request):
             image_url=image_url,
             owner=request.user
         )
-        print(listing)
 
         return HttpResponseRedirect(reverse("index"))
 
