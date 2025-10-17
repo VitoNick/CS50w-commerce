@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div class="listing">
+        <h3>{{ listing.title }}</h3>
+        <p>{{ listing.description }}</p>
+        <p>Starting Bid: ${{ listing.starting_bid }}</p>
+        <p>Current Bid: ${{ listing.current_bid }}</p>
+        <p>Created by: {{ listing.owner.username }}</p>
+        {% if listing.image_url %}
+            <img class="image" src="{{ listing.image_url }}" alt="{{ listing.title }}" width="" height="">
+        {% endif %}
+    </div>
+
+{% endblock %}

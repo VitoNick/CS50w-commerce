@@ -87,3 +87,15 @@ def create_listing(request):
         return HttpResponseRedirect(reverse("index"))
 
     return render(request, "auctions/create_listing.html")
+    
+def listing(request, listing_id):
+    try:
+        listing = AuctionListing.objects.get(id=listing_id)
+    except AuctionListing.DoesNotExist:
+        return render(request, "auctions/index.html", {
+            "message": "Listing not found."
+        })
+    
+    return render(request, "auctions/listing.html", {
+        "listing": listing
+    })
