@@ -3,6 +3,16 @@
 {% block body %}
     <div class="listing">
         <h3>{{ listing.title }}</h3>
+        <form action="{% url 'toggle_watchlist' listing.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">
+                {% if user in listing.watchlisted_by.all %}
+                    Remove from Watchlist
+                {% else %}
+                    Add to Watchlist
+                {% endif %}
+            </button>
+        </form>
         <p>{{ listing.description }}</p>
         <p>Starting Bid: ${{ listing.starting_bid }}</p>
         <p>Current Bid: ${{ listing.current_bid }}</p>

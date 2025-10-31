@@ -1,4 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -98,4 +100,25 @@ def listing(request, listing_id):
     
     return render(request, "auctions/listing.html", {
         "listing": listing
+    })
+
+def toggle_watchlist(request, listing_id):
+    listing = get_object_or_404(AuctionListing, id=listing_id)
+    user = request.user
+
+    if listing in user.watchlist.all():
+        user.watchlist.remove(listing)
+    else:
+        user.watchlist.add(listing)
+
+    return redirect('listing', listing_id=listing.id)
+
+def watchlist(request):
+    if request.user.is_authenticated:
+        watchlist_items = request.user.watchlist.all()
+    else:
+        watchlist_items = []
+    
+    return render(request, "auctions/watchlist.html", {
+        "watchlist": watchlist_items
     })

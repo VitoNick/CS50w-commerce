@@ -3,7 +3,9 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    watchlist = models.ManyToManyField(
+        "AuctionListing", blank=True, related_name="watchlisted_by"
+    )
 
 class AuctionListing(models.Model):
     title = models.CharField(max_length=64)
