@@ -102,6 +102,7 @@ def listing(request, listing_id):
         "listing": listing
     })
 
+@login_required
 def toggle_watchlist(request, listing_id):
     listing = get_object_or_404(AuctionListing, id=listing_id)
     user = request.user
@@ -113,11 +114,9 @@ def toggle_watchlist(request, listing_id):
 
     return redirect('listing', listing_id=listing.id)
 
+@login_required
 def watchlist(request):
-    if request.user.is_authenticated:
-        watchlist_items = request.user.watchlist.all()
-    else:
-        watchlist_items = []
+    watchlist_items = request.user.watchlist.all()
     
     return render(request, "auctions/watchlist.html", {
         "watchlist": watchlist_items

@@ -120,3 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Login URL for @login_required decorator
+LOGIN_URL = '/login'
+
+# For mobile device testing
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.50.214"]

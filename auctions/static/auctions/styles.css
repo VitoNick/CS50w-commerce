@@ -30,3 +30,27 @@ body {
     margin-bottom: 5px;
     color: #666;
 }
+
+.watchlist-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+}
+
+.watchlist-item h4 {
+    margin-top: 0;
+}
+
+.watchlist-item a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.watchlist-item a:hover {
+    text-decoration: underline;
+}
+
+.watchlist-item img {
+    margin-bottom: 10px;
+}

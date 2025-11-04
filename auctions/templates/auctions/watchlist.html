@@ -4,20 +4,18 @@
     <h2>Your Watchlist</h2>
 
     {% if watchlist %}
-        <ul class="list-group">
-            {% for item in watchlist %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <a href="{% url 'listing' item.id %}">{{ item.title }}</a>
-                        {% if item.description %}<div class="small text-muted">{{ item.description }}</div>{% endif %}
-                    </div>
-                    <div class="text-end">
-                        {% if item.current_price %}<div>${{ item.current_price }}</div>{% endif %}
-                        {% if item.category %}<div class="small text-muted">{{ item.category }}</div>{% endif %}
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        {% for item in watchlist %}
+            <div class="watchlist-item">
+                <h4><a href="{% url 'listing' item.id %}">{{ item.title }}</a></h4>
+                {% if item.description %}
+                    <p>{{ item.description }}</p>
+                {% endif %}
+                {% if item.image_url %}
+                    <img class="image" src="{{ item.image_url }}" alt="{{ item.title }}" width="" height="">
+                {% endif %}
+                <p>Current Price: ${{ item.current_bid }}</p>
+            </div>
+        {% endfor %}
     {% else %}
         <p>You have no items in your watchlist.</p>
     {% endif %}
