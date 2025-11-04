@@ -11,6 +11,8 @@ body {
 .image {
     max-width: 300px;
     max-height: 300px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .listing {
@@ -29,6 +31,12 @@ body {
 .listing p {
     margin-bottom: 5px;
     color: #666;
+}
+
+.listing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .watchlist-item {

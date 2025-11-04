@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .forms import BidForm
 
 from .models import User, AuctionListing, Bid, Comments
 
@@ -98,8 +99,9 @@ def listing(request, listing_id):
             "message": "Listing not found."
         })
     
+    bid_form = BidForm()
     return render(request, "auctions/listing.html", {
-        "listing": listing
+        "listing": listing, "bid_form": bid_form
     })
 
 @login_required
