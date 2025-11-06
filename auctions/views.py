@@ -99,10 +99,48 @@ def listing(request, listing_id):
             "message": "Listing not found."
         })
     
-    bid_form = BidForm()
+    if request.method == 'POST':
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid = form.save(commit=False)
+            bid.listing = listing
+            bid.bidder = request.user
+            bid.save()
+            return redirect("listing", listing_id=listing.id)
+    else:
+        form = BidForm()
+        
     return render(request, "auctions/listing.html", {
-        "listing": listing, "bid_form": bid_form
+        "listing": listing, "bid_form": form
     })
+
+
+###### EXAMPLE VIEW TO WORK FROM ######
+###### EXAMPLE VIEW TO WORK FROM ######
+###### EXAMPLE VIEW TO WORK FROM ######
+###### EXAMPLE VIEW TO WORK FROM ######
+
+# from django.shortcuts import render, redirect
+# from .forms import ProductForm
+
+# def create_product(request):
+#     if request.method == 'POST':
+#         form = ProductForm(request.POST)
+#         if form.is_valid():
+#             form.save()  # Saves the new product to the database
+#             return redirect('product_list')  # Redirect to a list view after successful creation
+#     else:
+#         form = ProductForm()  # Create an empty form for GET requests
+
+#     return render(request, 'myapp/create_product.html', {'form': form})
+
+###### EXAMPLE VIEW TO WORK FROM ######
+###### EXAMPLE VIEW TO WORK FROM ######
+###### EXAMPLE VIEW TO WORK FROM ######
+###### EXAMPLE VIEW TO WORK FROM ######
+
+
+
 
 @login_required
 def toggle_watchlist(request, listing_id):
