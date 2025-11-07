@@ -4,6 +4,9 @@
     <div class="listing">
         <div class="listing-header">
             <h3>{{ listing.title }}</h3>
+            {% if listing.closed %}
+                <h3 class="listing-closed">AUCTION CLOSED</h3>
+            {% endif %}
             <form action="{% url 'toggle_watchlist' listing.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">
@@ -17,19 +20,40 @@
         </div>
         <p>{{ listing.description }}</p>
         <p>Starting Bid: ${{ listing.starting_bid }}</p>
-        <p>Current Bid: ${{ listing.current_bid }}</p>
+        {% if listing.bid_count == 0 %}
+            <p>Current Bid: No bids yet</p>
+        {% else %}
+            <p>Current Bid: ${{ listing.current_bid }}</p>
+        {% endif %}
         <p>Created by: {{ listing.owner.username }}</p>
         {% if listing.image_url %}
         <img class="image" src="{{ listing.image_url }}" alt="{{ listing.title }}" width="" height="">
         {% endif %}
-        <form method="post">
-            {% csrf_token %}
-            {{ bid_form.non_field_errors }}
-            {{ bid_form.amount.label_tag }}
-            $ {{ bid_form.amount }}
-            {{ bid_form.amount.errors }}
-            <button type="submit" class="btn btn-primary">Place Bid</button>
-        </form>
+        {% if not listing.closed %}
+            <form method="post">
+                {% csrf_token %}
+                {{ bid_form.non_field_errors }}
+                {{ bid_form.amount.label_tag }}
+                $ {{ bid_form.amount }}
+                {{ bid_form.amount.errors }}
+                <button type="submit" class="btn btn-primary">Place Bid</button>
+            </form>
+        {% else %}
+        <h2>
+            "{{ listing.winner }}" is the winner
+        </h2>
+        {% endif %}
+        <!-- 
+        if the user logged in is equal to the listing's owner, then
+        add a "close auction" button
+        -->
+        {% if user == listing.owner %}
+            <form action="{% url 'close_auction' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Close Auction</button>
+            </form>
+        {% endif %}
+        
     </div>
 
 {% endblock %}

@@ -39,6 +39,11 @@ body {
     align-items: center;
 }
 
+.listing h3.listing-closed {
+    color: red;
+    font-weight: bold;
+}
+
 .watchlist-item {
     border: 1px solid #ccc;
     padding: 10px;

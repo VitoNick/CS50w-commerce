@@ -67,6 +67,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+
 def create_listing(request):
     # Check if the user is logged in
     if not request.user.is_authenticated:
@@ -91,6 +92,7 @@ def create_listing(request):
 
     return render(request, "auctions/create_listing.html")
     
+
 def listing(request, listing_id):
     try:
         listing = AuctionListing.objects.get(id=listing_id)
@@ -100,7 +102,7 @@ def listing(request, listing_id):
         })
     
     if request.method == 'POST':
-        form = BidForm(request.POST)
+        form = BidForm(request.POST, listing=listing)
         if form.is_valid():
             bid = form.save(commit=False)
             bid.listing = listing
@@ -108,39 +110,23 @@ def listing(request, listing_id):
             bid.save()
             return redirect("listing", listing_id=listing.id)
     else:
-        form = BidForm()
+        form = BidForm(listing=listing)
         
     return render(request, "auctions/listing.html", {
         "listing": listing, "bid_form": form
     })
 
+@login_required
+def close_auction(request, listing_id):
+    listing = get_object_or_404(AuctionListing, id=listing_id)
+    
+    if request.user != listing.owner:
+        return HttpResponse("Unauthorized", status=403)
 
-###### EXAMPLE VIEW TO WORK FROM ######
-###### EXAMPLE VIEW TO WORK FROM ######
-###### EXAMPLE VIEW TO WORK FROM ######
-###### EXAMPLE VIEW TO WORK FROM ######
-
-# from django.shortcuts import render, redirect
-# from .forms import ProductForm
-
-# def create_product(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST)
-#         if form.is_valid():
-#             form.save()  # Saves the new product to the database
-#             return redirect('product_list')  # Redirect to a list view after successful creation
-#     else:
-#         form = ProductForm()  # Create an empty form for GET requests
-
-#     return render(request, 'myapp/create_product.html', {'form': form})
-
-###### EXAMPLE VIEW TO WORK FROM ######
-###### EXAMPLE VIEW TO WORK FROM ######
-###### EXAMPLE VIEW TO WORK FROM ######
-###### EXAMPLE VIEW TO WORK FROM ######
-
-
-
+    listing.closed = True
+    listing.create_winner()
+    listing.save()
+    return redirect("listing", listing_id=listing.id)
 
 @login_required
 def toggle_watchlist(request, listing_id):
@@ -153,6 +139,7 @@ def toggle_watchlist(request, listing_id):
         user.watchlist.add(listing)
 
     return redirect('listing', listing_id=listing.id)
+
 
 @login_required
 def watchlist(request):

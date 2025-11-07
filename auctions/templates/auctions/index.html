@@ -8,7 +8,11 @@
             <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
             <p>{{ listing.description }}</p>
             <p>Starting Bid: ${{ listing.starting_bid }}</p>
-            <p>Current Bid: ${{ listing.current_bid }}</p>
+            {% if listing.bid_count == 0 %}
+                <p>Current Bid: No bids yet</p>
+            {% else %}
+                <p>Current Bid: ${{ listing.current_bid }}</p>
+            {% endif %}
             <p>Created by: {{ listing.owner.username }}</p>
             {% if listing.image_url %}
                 <img class="image" src="{{ listing.image_url }}" alt="{{ listing.title }}" width="" height="">

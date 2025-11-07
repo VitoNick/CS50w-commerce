@@ -15,6 +15,8 @@ class AuctionListing(models.Model):
     active = models.BooleanField(default=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    winner = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="won_auctions")
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -27,6 +29,14 @@ class AuctionListing(models.Model):
     
     def bid_count(self):
         return self.bids.count()
+    
+    def create_winner(self):
+        if self.closed:
+            highest_bid = self.bids.order_by('-amount').first()
+            if highest_bid:
+                self.winner = highest_bid.bidder
+                self.save()
+            return self.winner
 
 class Bid(models.Model):
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="bids")
