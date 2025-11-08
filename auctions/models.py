@@ -47,6 +47,11 @@ class Bid(models.Model):
     def __str__(self):
         return f"{self.bidder.username} bid ${self.amount} on {self.listing.title}"
 
-class Comments():
-    pass
+class Comment(models.Model):
+    listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="comments")
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.commenter.username} commented on {self.listing.title}"

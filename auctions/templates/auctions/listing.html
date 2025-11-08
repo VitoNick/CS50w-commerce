@@ -20,6 +20,7 @@
         </div>
         <p>{{ listing.description }}</p>
         <p>Starting Bid: ${{ listing.starting_bid }}</p>
+
         {% if listing.bid_count == 0 %}
             <p>Current Bid: No bids yet</p>
         {% else %}
@@ -29,6 +30,7 @@
         {% if listing.image_url %}
         <img class="image" src="{{ listing.image_url }}" alt="{{ listing.title }}" width="" height="">
         {% endif %}
+
         {% if not listing.closed %}
             <form method="post">
                 {% csrf_token %}
@@ -36,24 +38,28 @@
                 {{ bid_form.amount.label_tag }}
                 $ {{ bid_form.amount }}
                 {{ bid_form.amount.errors }}
-                <button type="submit" class="btn btn-primary">Place Bid</button>
+                <button type="submit" name="bid_submit" class="btn btn-primary">Place Bid</button>
             </form>
         {% else %}
         <h2>
             "{{ listing.winner }}" is the winner
         </h2>
         {% endif %}
-        <!-- 
-        if the user logged in is equal to the listing's owner, then
-        add a "close auction" button
-        -->
+
         {% if user == listing.owner %}
             <form action="{% url 'close_auction' listing.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Close Auction</button>
             </form>
         {% endif %}
-        
+        <div class="comment-form">
+            <form method="post">
+                {% csrf_token %}
+                {{ comment_form.non_field_errors }}
+                {{ comment_form.content }}
+                {{ comment_form.amount.errors }}
+                <button type="submit" name="comment_submit" class="btn btn-primary">Place Bid</button>
+            </form>
+        </div>
     </div>
-
 {% endblock %}
