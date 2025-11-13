@@ -1,10 +1,10 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <h2>Sold Items</h2>
 
     {% for listing in listings %}
-        {% if not listing.closed %}
+        {% if listing.closed %}
         <div class="listing">
             <h3><a href="{% url 'listing' listing.id %}">{{ listing.title }}</a></h3>
             <p>{{ listing.description }}</p>

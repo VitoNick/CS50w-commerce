@@ -10,7 +10,7 @@
             <div>
                 <form action="{% url 'toggle_watchlist' listing.id %}" method="post">
                     {% csrf_token %}
-                    <button type="submit">
+                    <button class="btn btn-primary" type="submit">
                         {% if user in listing.watchlisted_by.all %}
                             Remove from Watchlist
                         {% else %}
@@ -18,7 +18,7 @@
                         {% endif %}
                     </button>
                 </form>
-                {% if user == listing.owner %}
+                {% if user == listing.owner and not listing.closed %}
                     <form action="{% url 'close_auction' listing.id %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Close Auction</button>
@@ -40,14 +40,16 @@
         {% endif %}
 
         {% if not listing.closed %}
-            <form method="post">
-                {% csrf_token %}
-                {{ bid_form.non_field_errors }}
-                {{ bid_form.amount.label_tag }}
-                $ {{ bid_form.amount }}
-                {{ bid_form.amount.errors }}
-                <button type="submit" name="bid_submit" class="btn btn-primary">Place Bid</button>
-            </form>
+            <div class="bid-form">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ bid_form.non_field_errors }}
+                    {{ bid_form.amount.label_tag }}
+                    $ {{ bid_form.amount }}
+                    {{ bid_form.amount.errors }}
+                    <button type="submit" name="bid_submit" class="btn btn-primary">Place Bid</button>
+                </form>
+            </div>
         {% else %}
         <h2>
             "{{ listing.winner }}" is the winner
@@ -65,9 +67,20 @@
                 {% csrf_token %}
                 {{ comment_form.non_field_errors }}
                 {{ comment_form.content }}
-                {{ comment_form.amount.errors }}
-                <button type="submit" name="comment_submit" class="btn btn-primary">Place Bid</button>
+                {{ comment_form.content.errors }}
+                <button type="submit" name="comment_submit" class="btn btn-primary">Comment</button>
             </form>
+        </div>
+        <div class="comments-section">
+            <h4>Comments:</h4>
+            {% for comment in listing.comments.all %}
+                <div class="comment">
+                    <strong>{{ comment.commenter.username }}</strong> - {{ comment.created_at|date:"M d, Y g:i A" }}
+                    <p>{{ comment.content }}</p>
+                </div>
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -45,7 +45,7 @@ body {
 }
 
 .listing form {
-    
+    margin-bottom: 5px;
 }
 
 .watchlist-item {
@@ -72,6 +72,108 @@ body {
     margin-bottom: 10px;
 }
 
-.comment-form {
+.bid-form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #e8f4f8;
+    border-radius: 8px;
+    border: 1px solid #b3d9e6;
+}
+
+.bid-form label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.bid-form input[type="number"] {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-right: 5px;
+}
+
+.bid-form button {
+    margin-bottom: 4px;
+    padding: 10px 20px;
+}
+
+.bid-form .errorlist {
+    color: #d9534f;
+    font-size: 0.9em;
+    margin-top: 5px;
+    list-style: none;
+    padding: 0;
+}
+
+/* .comment-form {
     margin-top: 10px;
+}
+
+.comments-section {
+    
+} */
+
+.comment-form {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.comment-form button {
+    margin-top: 10px;
+}
+
+.comments-section {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.comments-section h4 {
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #007bff;
+}
+
+.comment {
+    padding: 12px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+}
+
+.comment strong {
+    color: #007bff;
+    font-size: 0.95em;
+}
+
+.comment p {
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #444;
+    line-height: 1.5;
+}
+
+.comment:last-child {
+    margin-bottom: 0;
 }

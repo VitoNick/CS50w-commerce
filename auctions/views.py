@@ -15,6 +15,10 @@ def index(request):
     listings = AuctionListing.objects.filter(active=True).order_by('-created_at')
     return render(request, "auctions/index.html", {"listings": listings})
 
+def sold_items(request):
+    # Retrieve all auction listings, ordered by creation date/time
+    listings = AuctionListing.objects.filter(active=True).order_by('-created_at')
+    return render(request, "auctions/sold_items.html", {"listings": listings})
 
 def login_view(request):
     if request.method == "POST":

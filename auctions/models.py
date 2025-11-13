@@ -7,6 +7,7 @@ class User(AbstractUser):
         "AuctionListing", blank=True, related_name="watchlisted_by"
     )
 
+
 class AuctionListing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
@@ -38,6 +39,7 @@ class AuctionListing(models.Model):
                 self.save()
             return self.winner
 
+
 class Bid(models.Model):
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="bids")
     bidder = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -46,6 +48,7 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"{self.bidder.username} bid ${self.amount} on {self.listing.title}"
+
 
 class Comment(models.Model):
     listing = models.ForeignKey(AuctionListing, on_delete=models.CASCADE, related_name="comments")
