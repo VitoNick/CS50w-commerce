@@ -7,16 +7,24 @@
             {% if listing.closed %}
                 <h3 class="listing-closed">AUCTION CLOSED</h3>
             {% endif %}
-            <form action="{% url 'toggle_watchlist' listing.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit">
-                    {% if user in listing.watchlisted_by.all %}
-                        Remove from Watchlist
-                    {% else %}
-                        Add to Watchlist
-                    {% endif %}
-                </button>
-            </form>
+            <div>
+                <form action="{% url 'toggle_watchlist' listing.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if user in listing.watchlisted_by.all %}
+                            Remove from Watchlist
+                        {% else %}
+                            Add to Watchlist
+                        {% endif %}
+                    </button>
+                </form>
+                {% if user == listing.owner %}
+                    <form action="{% url 'close_auction' listing.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Close Auction</button>
+                    </form>
+                {% endif %}
+            </div>
         </div>
         <p>{{ listing.description }}</p>
         <p>Starting Bid: ${{ listing.starting_bid }}</p>
@@ -46,12 +54,12 @@
         </h2>
         {% endif %}
 
-        {% if user == listing.owner %}
+        <!-- {% if user == listing.owner %}
             <form action="{% url 'close_auction' listing.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit">Close Auction</button>
             </form>
-        {% endif %}
+        {% endif %} -->
         <div class="comment-form">
             <form method="post">
                 {% csrf_token %}
