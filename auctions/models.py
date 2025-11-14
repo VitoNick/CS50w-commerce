@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from .choices import CategoryChoices
 
 
 class User(AbstractUser):
@@ -18,6 +19,11 @@ class AuctionListing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     winner = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="won_auctions")
     closed = models.BooleanField(default=False)
+    category = models.CharField(
+        max_length=2,
+        choices=CategoryChoices.choices,
+        default=CategoryChoices.OTHER,
+    )
 
     def __str__(self):
         return self.title
@@ -58,3 +64,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.commenter.username} commented on {self.listing.title}"
+    

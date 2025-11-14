@@ -92,7 +92,7 @@ body {
     width: 200px;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 1rem;
     font-size: 1em;
     margin-right: 5px;
 }
@@ -130,7 +130,7 @@ body {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 1rem;
     font-family: inherit;
     resize: vertical;
 }

@@ -10,7 +10,7 @@
             <div>
                 <form action="{% url 'toggle_watchlist' listing.id %}" method="post">
                     {% csrf_token %}
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-primary rounded-pill" type="submit">
                         {% if user in listing.watchlisted_by.all %}
                             Remove from Watchlist
                         {% else %}
@@ -21,7 +21,7 @@
                 {% if user == listing.owner and not listing.closed %}
                     <form action="{% url 'close_auction' listing.id %}" method="post">
                         {% csrf_token %}
-                        <button type="submit">Close Auction</button>
+                        <button class="btn btn-primary rounded-pill" type="submit">Close Auction</button>
                     </form>
                 {% endif %}
             </div>
@@ -47,7 +47,7 @@
                     {{ bid_form.amount.label_tag }}
                     $ {{ bid_form.amount }}
                     {{ bid_form.amount.errors }}
-                    <button type="submit" name="bid_submit" class="btn btn-primary">Place Bid</button>
+                    <button type="submit" name="bid_submit" class="btn btn-primary rounded-pill">Place Bid</button>
                 </form>
             </div>
         {% else %}
@@ -68,7 +68,7 @@
                 {{ comment_form.non_field_errors }}
                 {{ comment_form.content }}
                 {{ comment_form.content.errors }}
-                <button type="submit" name="comment_submit" class="btn btn-primary">Comment</button>
+                <button type="submit" name="comment_submit" class="btn btn-primary rounded-pill">Comment</button>
             </form>
         </div>
         <div class="comments-section">
