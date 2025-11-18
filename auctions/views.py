@@ -6,8 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import BidForm, CommentForm
-
 from .models import User, AuctionListing, Bid, Comment
+from .choices import CategoryChoices
 
 
 def index(request):
@@ -81,6 +81,7 @@ def create_listing(request):
         title = request.POST.get("title", "").strip()
         description = request.POST.get("description", "").strip()
         starting_bid = request.POST.get("starting_bid", "").strip()
+        category = request.POST.get("category", "").strip()
         image_url = request.POST.get("image_url", "").strip()
 
         # Create a new Auction Listing
@@ -88,13 +89,16 @@ def create_listing(request):
             title=title, 
             description=description, 
             starting_bid=starting_bid, 
+            category=category,
             image_url=image_url,
             owner=request.user
         )
-
         return HttpResponseRedirect(reverse("index"))
 
-    return render(request, "auctions/create_listing.html")
+    category_choices = CategoryChoices.choices
+    return render(request, "auctions/create_listing.html", {
+        "category": category_choices
+    })
     
 def listing(request, listing_id):
     try:

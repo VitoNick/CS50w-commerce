@@ -39,6 +39,11 @@ body {
     align-items: center;
 }
 
+.listing p.current_bid {
+    /* color: #005ec2; */
+    font-weight: bold;
+}
+
 .listing h3.listing-closed {
     color: red;
     font-weight: bold;
